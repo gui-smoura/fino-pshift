@@ -1,0 +1,35 @@
+# Build directories
+build/
+bin/
+lib/
+out/
+.ninja_*
+
+# Visual Studio / MSVC artifacts
+.vs/
+*.sln
+*.vcxproj*
+*.dir/
+*.obj
+*.pdb
+*.idb
+*.ilk
+*.exp
+*.lib
+*.exe
+
+# VS Code & IDEs
+.vscode/
+.idea/
+*.swp
+*~
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Runtime configurations and logs
+config.json
+*.log
