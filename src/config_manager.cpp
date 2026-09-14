@@ -25,6 +25,7 @@ AppConfig ConfigManager::get_default_config() {
     cfg.presets = {
         {"432 Hz Retuning (Verdi)", 1, 0.0f, 0.0f, 440.0f, 432.0f},
         {"528 Hz Retuning (Solfeggio)", 1, 0.0f, 0.0f, 440.0f, 528.0f},
+        {"417 Hz Retuning (Sol# 4)", 1, 0.0f, 0.0f, 440.0f, 417.0f},
         {"Nightcore (+2 Semitones)", 0, 2.0f, 0.0f, 440.0f, 440.0f},
         {"Vaporwave / Slow (-2 Semitones)", 0, -2.0f, 0.0f, 440.0f, 440.0f},
         {"Male to Female (+3.5 Semitones)", 0, 3.5f, 0.0f, 440.0f, 440.0f},

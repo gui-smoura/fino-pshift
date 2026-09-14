@@ -247,23 +247,10 @@ void UI::render_pitch_controls() {
                 m_config.mode = 1;
                 bool changed = false;
 
-                changed |= ImGui::DragFloat("Frequencia Origem (Hz)", &m_config.source_hz, 0.5f, 20.0f, 20000.0f, "%.1f Hz");
-                changed |= ImGui::DragFloat("Frequencia Destino (Hz)", &m_config.target_hz, 0.5f, 20.0f, 20000.0f, "%.1f Hz");
+                changed |= ImGui::DragFloat("Frequencia Origem A4 (Hz)", &m_config.source_hz, 0.05f, 20.0f, 20000.0f, "%.2f Hz");
+                changed |= ImGui::DragFloat("Frequencia Destino (Hz)", &m_config.target_hz, 0.05f, 20.0f, 20000.0f, "%.2f Hz");
 
-                ImGui::Text("Presets de Retonificacao:");
-                if (ImGui::Button("440 -> 432 Hz (Verdi / Harmonica)")) {
-                    m_config.source_hz = 440.0f;
-                    m_config.target_hz = 432.0f;
-                    changed = true;
-                }
-                ImGui::SameLine();
-                if (ImGui::Button("440 -> 528 Hz (Solfeggio)")) {
-                    m_config.source_hz = 440.0f;
-                    m_config.target_hz = 528.0f;
-                    changed = true;
-                }
-                ImGui::SameLine();
-                if (ImGui::Button("Reset (440 -> 440 Hz)")) {
+                if (ImGui::Button("Resetar Frequencias (440.00 Hz)")) {
                     m_config.source_hz = 440.0f;
                     m_config.target_hz = 440.0f;
                     changed = true;
@@ -274,10 +261,13 @@ void UI::render_pitch_controls() {
                     sync_config_from_ui();
                 }
 
-                const float ratio = PitchMath::frequency_to_ratio(m_config.source_hz, m_config.target_hz);
-                const float semitones = PitchMath::ratio_to_semitones(ratio);
+                const NoteInfo note = PitchMath::find_nearest_note(m_config.target_hz, m_config.source_hz);
                 ImGui::Separator();
-                ImGui::TextColored(ImVec4(0.40f, 0.85f, 1.00f, 1.00f), "Fator Multiplicador: %.4fx  (Equivalente: %.2f st)", ratio, semitones);
+                ImGui::TextColored(ImVec4(0.35f, 0.75f, 1.00f, 1.00f), "Nota Detectada: %s (%s)", note.note_name.c_str(), note.note_name_pt.c_str());
+                ImGui::TextDisabled("Frequencia nominal padrao: %.2f Hz", note.nominal_frequency_hz);
+                ImGui::TextColored(ImVec4(0.20f, 0.85f, 0.60f, 1.00f), "Afinacao A4 Equivalente: %.2f Hz", note.equivalent_a4_hz);
+                ImGui::Text("Desvio de Afinacao: %+.2f cents (%+.2f semitons)", note.cents_offset, note.semitones_offset);
+                ImGui::TextColored(ImVec4(0.40f, 0.85f, 1.00f, 1.00f), "Fator Multiplicador: %.4fx", note.ratio);
 
                 ImGui::EndTabItem();
             }
