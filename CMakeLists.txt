@@ -134,6 +134,13 @@ target_link_libraries(fino-pshift PRIVATE
     glfw
 )
 
+if(WIN32)
+    set_target_properties(fino-pshift PROPERTIES WIN32_EXECUTABLE TRUE)
+    if(MSVC)
+        set_target_properties(fino-pshift PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup")
+    endif()
+endif()
+
 target_compile_options(fino-pshift PRIVATE ${FINO_WARNING_FLAGS})
 
 # Unit Tests
